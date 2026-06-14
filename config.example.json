@@ -1,0 +1,36 @@
+{
+  "_說明": "把這個檔複製成 config.json 再填。所有 ID 都要換成你自己的，不要沿用別人的。",
+  "threadsChatUrl": "",
+  "threadsInboxUrl": "https://www.threads.com/messages",
+  "notion": {
+    "_說明": "yearPageId = 你 Notion 裡放各月份頁的年份頁；monthPages = 月份數字對到該月頁 ID；monthDatabases 留空，Skill 會自動建立並回填。",
+    "yearPageId": "",
+    "monthPages": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": "",
+      "6": "",
+      "7": "",
+      "8": "",
+      "9": "",
+      "10": "",
+      "11": "",
+      "12": ""
+    },
+    "monthDatabases": {},
+    "categories": [
+      "生活靈感/情感",
+      "美食/旅遊",
+      "娛樂/推薦",
+      "日常/幽默",
+      "資安警示",
+      "科技/AI",
+      "職場/工作",
+      "理財/投資",
+      "學習/知識",
+      "購物/好物"
+    ]
+  }
+}
