@@ -16,17 +16,6 @@
 
 `看過`、`備註` 兩欄是你自己用的，Skill 不會去動。
 
-## 分享給別人時要改什麼（重要）
-這個 Skill 預設綁定原作者的環境，**直接分享別人不能用**，必須換掉以下個人資料：
-
-1. **`config.json`**：裡面是原作者的 Notion 頁面 ID 與聊天室網址。
-   - 請改用 `config.example.json` 當範本，填**你自己的** `threadsChatUrl`、`yearPageId`、`monthPages`。
-   - `monthDatabases` 留空，第一次跑會自動建立並回填。
-2. **`state/processed.json`**：清空成 `{ "processedUrls": [] }`，否則會誤判別人的貼文已處理過。
-3. **各自的連線**：每個人要有自己的 Claude in Chrome（登入自己的 Threads）和自己的 Notion 連線。
-4. **Notion 結構**：預設假設「年份頁 → 月份子頁」的結構。若你的 Notion 不是這樣，第一次跑時告訴 Claude 你想把資料庫放哪，讓它幫你建。
-5. **隱私認知**：這個 Skill 會讀你的**私訊內容**並寫進 Notion，分享對象要清楚這點。
-
 ## 已知限制
 - **看 DOM 吃改版**：Threads 網頁版改版時，抓取用的選擇器可能要更新（細節在 `references/threads-scraping.md`，已盡量只靠穩定的連結結構定位）。
 - **要登入**：遇到登入牆會停下請你登入，不會嘗試繞過。
