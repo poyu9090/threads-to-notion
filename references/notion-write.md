@@ -13,27 +13,29 @@
 | 主題 | select | 分類擇一 |
 | 看過 | checkbox | **使用者自己勾**，Skill 不要動 |
 | 備註 | text | **使用者手動輸入**，Skill 不要動 |
+| 加入日期 | created_time | **自動**帶入建立時間（＝整理寫入該筆的日期）；Skill 不需也不能填 |
 
 > `看過` 與 `備註` 是使用者欄位：建立資料庫時要有，但寫入貼文時**留空**，不要覆蓋使用者已填的內容。
 
-DDL（用 `notion-create-database`，parent 為當月月份頁的 `page_id`）：
+DDL（用 `notion-create-database`，parent 為下面決定的父頁 `page_id`）：
 
 ```sql
 CREATE TABLE ("標題" TITLE, "摘要" RICH_TEXT, "建議心得" RICH_TEXT, "連結" URL,
   "主題" SELECT('生活靈感/情感':pink, '美食/旅遊':orange, '娛樂/推薦':purple,
   '日常/幽默':yellow, '資安警示':red, '科技/AI':blue, '職場/工作':gray,
   '理財/投資':green, '學習/知識':brown, '購物/好物':default),
-  "看過" CHECKBOX, "備註" RICH_TEXT)
+  "看過" CHECKBOX, "備註" RICH_TEXT, "加入日期" CREATED_TIME)
 ```
 
 建完後再加一個依主題分群的看板檢視（`notion-create-view`，`type: board`，`GROUP BY "主題"`），
 方便重現「依分類掃視」的閱讀體驗。把回傳的 `databaseId` 與 `dataSourceId` 寫回 `config.json`。
 
-## 找/建當月月份頁
+## 決定當月資料庫要建在哪個父頁
 
-1. 先看 `config.json` 的 `notion.monthPages[<月份數字>]` 有沒有現成頁 ID。
-2. 沒有的話，`notion-fetch` 年份頁（`yearPageId`）找名為「一月～十二月」的子頁；
-   仍找不到就在年份頁底下新建一個該月份頁，並把 ID 寫回 config。
+依序判斷，第一個成立就用：
+1. **既有月份結構（相容用）**：`config.json` 的 `notion.monthPages[<月份數字>]` 有頁 ID → 建在該月份頁底下。
+2. **一般用戶（預設）**：`notion.parentPageId` 有值 → 直接建在這個頁底下；資料庫標題已含月份（`Threads 待讀 YYYY-MM`），不需再另開月份子頁。
+3. 兩者都沒有 → 回到 SKILL.md 步驟 0 首次設定，問使用者要放哪、或幫他建一個容器頁，存成 `parentPageId`。
 
 ## 寫入資料列
 

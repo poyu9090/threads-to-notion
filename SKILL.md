@@ -31,15 +31,21 @@ description: >
 ## 設定檔
 
 所有狀態存在這個 Skill 目錄下：
-- `config.json` — Threads 聊天室網址、Notion 年份頁/月份頁對應、各月資料庫 ID、主題清單。
+- `config.json` — Threads 聊天室網址、Notion 父頁（`parentPageId`；亦相容舊的 `yearPageId`/`monthPages` 月份結構）、各月資料庫 ID、主題清單。
 - `state/processed.json` — 已處理過的貼文連結（**去重的依據，跨月共用**）。
 
 每次開始前先讀 `config.json`。若 `threadsChatUrl` 為空，先做 **首次設定**（見下）。
 
 ## 流程
 
-### 步驟 0 — 首次設定（只有 config 沒有聊天室網址時）
+### 步驟 0 — 首次設定（config 還沒設好時，缺哪項就做哪項）
 
+**(A) Notion 要放哪**（`monthDatabases` 為空，且 `monthPages` 與 `parentPageId` 都沒有時）
+1. 問使用者：「要把 Threads 待讀整理放進 Notion 哪一頁底下？」請他給一個 Notion 頁面網址/ID；
+   或由 Skill 用 `notion-create-pages` 幫他在工作區建一個 `Threads 待讀` 容器頁。
+2. 把該頁 ID 寫進 `config.json` 的 `notion.parentPageId`。之後每月資料庫都建在它底下。
+
+**(B) 聊天室是哪一個**（`threadsChatUrl` 為空時）
 1. `navigate` 到 `https://www.threads.com/messages`（或 config 的 `threadsInboxUrl`）。
 2. 若導向登入頁 → 請使用者登入，等他完成。
 3. 用 `get_page_text` 列出收件匣的對話，問使用者「你都轉發到哪一個聊天室？」
@@ -90,12 +96,13 @@ description: >
 1. 用**今天日期**算出當月 key `YYYY-MM`（例如 `2026-06`）。
 2. 查 `config.json` 的 `notion.monthDatabases[key]`：
    - 有 → 用它的 `dataSourceId`。
-   - 沒有 → 依 `references/notion-write.md` 在「對應月份頁」底下新建 `Threads 待讀 YYYY-MM` 資料庫
-     （含「依主題」看板檢視），並把新 ID 寫回 `config.json`。
+   - 沒有 → 依 `references/notion-write.md` 決定父頁（`monthPages` → `parentPageId` → 步驟 0 首次設定），
+     在父頁底下新建 `Threads 待讀 YYYY-MM` 資料庫（含「依主題」看板檢視），並把新 ID 寫回 `config.json`。
 3. 用 `notion-create-pages`，parent 用該 `data_source_id`，每則一筆，properties：
    `標題`、`摘要`、`建議心得`、`連結`、`主題`。可把原文全文放進頁面內文備查。
    一次呼叫可建多筆（最多 100），照欄位 schema 填。
    **`看過`（checkbox）與 `備註`（text）是使用者欄位，寫入時一律留空、不要覆蓋。**
+   **`加入日期`（created_time）由 Notion 自動帶入建立時間，Skill 不需也不能填。**
 
 ### 步驟 6 — 更新狀態並回報
 

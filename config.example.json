@@ -1,24 +1,10 @@
 {
-  "_說明": "把這個檔複製成 config.json 再填。所有 ID 都要換成你自己的，不要沿用別人的。",
+  "_說明": "複製成 config.json 再用。大多留空即可——第一次執行 Skill 時會引導你完成設定。",
   "threadsChatUrl": "",
   "threadsInboxUrl": "https://www.threads.com/messages",
   "notion": {
-    "_說明": "yearPageId = 你 Notion 裡放各月份頁的年份頁；monthPages = 月份數字對到該月頁 ID；monthDatabases 留空，Skill 會自動建立並回填。",
-    "yearPageId": "",
-    "monthPages": {
-      "1": "",
-      "2": "",
-      "3": "",
-      "4": "",
-      "5": "",
-      "6": "",
-      "7": "",
-      "8": "",
-      "9": "",
-      "10": "",
-      "11": "",
-      "12": ""
-    },
+    "_說明": "parentPageId = 你想把整理放進的 Notion 頁面 ID（留空則第一次跑時 Skill 會問你、或幫你建一個容器頁）。monthDatabases 留空，Skill 會自動建立每月資料庫並回填。",
+    "parentPageId": "",
     "monthDatabases": {},
     "categories": [
       "生活靈感/情感",
