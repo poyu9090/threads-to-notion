@@ -9,7 +9,7 @@ description: >
   這個 Skill 專門處理「Threads 私訊/聊天室裡轉貼的貼文 → Notion」這條流程。
 ---
 
-# Threads 聊天室 → Notion 待讀整理
+# Threads 聊天室訊息整理
 
 把使用者平常在 Threads 看到、隨手轉發到「聊天室（私訊）」的貼文，整理成可以之後再看的清單，寫進 Notion。
 **不使用 Threads API**：靠 Claude in Chrome 讀已登入的 Threads 網頁版。
