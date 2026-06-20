@@ -1,12 +1,12 @@
 ---
 name: threads-to-notion
 description: >
-  整理使用者轉發到 Threads 聊天室（私訊 DM）的貼文，並寫進 Notion 待讀資料庫。
+  Threads 聊天室訊息整理：把使用者轉發到 Threads 聊天室（私訊 DM）的貼文整理好，寫進 Notion 待讀資料庫。
   運作方式不使用 Threads 官方 API，而是透過 Claude in Chrome 讀取「已登入的 Threads 網頁版」聊天室，
   抓出每則被分享的貼文連結、擷取內文，產生摘要與「讀後建議心得」、分類主題，去重後寫入當月的 Notion 資料庫。
-  當使用者說「整理 Threads」「更新 Threads 待讀」「把 Threads 聊天室／轉發的貼文整理到 Notion」「跑一下 Threads 靈感筆記」
-  「我轉到 Threads 聊天室的東西幫我整理」等，即使沒有明講 Notion 或 Skill 名稱，都應該使用這個 Skill。
-  這個 Skill 專門處理「Threads 私訊/聊天室裡轉貼的貼文 → Notion」這條流程。
+  當使用者說「整理 Threads」「整理 Threads 聊天室訊息」「更新 Threads 待讀」「把 Threads 聊天室／轉發的貼文整理到 Notion」
+  「跑一下 Threads 靈感筆記」「我轉到 Threads 聊天室的東西幫我整理」等，即使沒有明講 Notion 或 Skill 名稱，都應該使用這個 Skill。
+  這個 Skill 專門處理「Threads 聊天室/私訊裡轉貼的貼文 → Notion」這條流程。
 ---
 
 # Threads 聊天室訊息整理
